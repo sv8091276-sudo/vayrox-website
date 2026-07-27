@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "VAYROX — Premium Fashion"
+version = "1.0.0"
+id = "artifacts/vayrox"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25763
+
+[services.development]
+run = "pnpm --filter @workspace/vayrox run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/vayrox", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/vayrox/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25763"
+BASE_PATH = "/"

@@ -1,45 +1,95 @@
-# [Project name]
+# VAYROX — Premium Fashion Ecommerce
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A luxury fashion ecommerce website for the VAYROX clothing brand. Black and silver premium theme built with React + Vite + Tailwind CSS.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/vayrox run dev` — run the frontend (port varies, managed by workflow)
+- `pnpm --filter @workspace/api-server run dev` — run the API server (port 8080)
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- Frontend: React 18 + Vite + Tailwind CSS v4
+- Routing: wouter
+- Animations: framer-motion
+- UI: shadcn/ui components (Radix primitives)
+- Forms: react-hook-form + zod
+- State: React Context (Cart, Wishlist, Auth)
+- API: Express 5 (shared api-server)
+- DB: PostgreSQL + Drizzle ORM (provisioned, schema not yet defined)
+- Future: Firebase Auth + Firestore (integration pending user credentials)
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/vayrox/src/pages/` — all 16 page components
+- `artifacts/vayrox/src/components/` — Navbar, Footer, ProductCard
+- `artifacts/vayrox/src/contexts/` — CartContext, WishlistContext, AuthContext
+- `artifacts/vayrox/src/data/products.ts` — 16 placeholder products (SVG images)
+- `artifacts/api-server/src/` — Express API server
+- `lib/db/src/schema/` — Drizzle schema (empty, pending Firebase decision)
+
+## Pages & Routes
+
+| Route | Page |
+|-------|------|
+| `/` | Home — hero, featured products, categories |
+| `/shop` | Shop — filters, search, product grid |
+| `/shop/men` | Men's collection |
+| `/shop/women` | Women's collection |
+| `/product/:id` | Product detail — gallery, sizes, cart |
+| `/cart` | Shopping cart |
+| `/wishlist` | Wishlist |
+| `/login` | Login / Sign Up |
+| `/about` | About VAYROX |
+| `/contact` | Contact form |
+| `/faq` | FAQ with search |
+| `/size-guide` | Size recommendation calculator |
+| `/skin-tone` | Skin tone colour recommendations |
+| `/shop-by-body-type` | Body type styling guide |
+| `/shop-by-height` | Height-based fit guide |
+| `/admin` | Admin dashboard (admin/admin123) |
+
+## Product Categories
+
+- **Active:** T-Shirts, Hoodies (Men & Women)
+- **Coming Soon:** Shirts, Pants, Jeans, Kurtis, Lehengas
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Frontend-only first build: all state is React Context + useState, no backend API calls yet
+- SVG data URI placeholders for product images (no external dependencies)
+- Firebase chosen as backend (pending user providing config credentials)
+- Admin dashboard uses local state with password gate (admin/admin123) — to be replaced with Firebase Auth
+- wouter used for routing (lighter than react-router, already in scaffold)
 
-## Product
+## Firebase Integration (Pending)
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+User wants Firebase backend. Requires these secrets once Firebase project is created:
+- `VITE_FIREBASE_API_KEY`
+- `VITE_FIREBASE_AUTH_DOMAIN`
+- `VITE_FIREBASE_PROJECT_ID`
+- `VITE_FIREBASE_STORAGE_BUCKET`
+- `VITE_FIREBASE_MESSAGING_SENDER_ID`
+- `VITE_FIREBASE_APP_ID`
+
+Firebase Console: https://console.firebase.google.com  
+Enable: Authentication (Email/Password) + Firestore Database + Storage
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Brand: VAYROX, premium luxury Indian fashion brand
+- Theme: Black (#0a0a0a, #111111) + Silver (#C0C0C0, #E8E8E8, #A8A8A8)
+- Typography: Playfair Display (headings) + Inter (body)
+- No emojis in UI
+- Firebase as backend (not the built-in Postgres)
+- React + Tailwind CSS (no Next.js — using Vite instead)
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
-
-## Pointers
-
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details
+- Google Fonts @import must be the FIRST line in index.css (before @import "tailwindcss")
+- Single-quoted strings in TSX data arrays must not contain apostrophes — use double quotes or template literals
+- Product images are SVG data URIs generated by the `svgPlaceholder()` helper in `src/data/products.ts`
+- Admin route `/admin` hides the Navbar and Footer (detected via `useLocation` in App.tsx)
