@@ -5,7 +5,7 @@ import router from "./routes";
 import { logger } from "./lib/logger";
 
 const app: Express = express();
-
+// @ts-ignore
 app.use(
   pinoHttp({
     logger,
