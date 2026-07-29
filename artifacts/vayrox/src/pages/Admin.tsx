@@ -203,21 +203,21 @@ export default function Admin() {
                   <span>Total Orders</span>
                   <ShoppingCart size={20} />
                 </div>
-                <div className="text-3xl font-bold">47</div>
+                <div className="text-3xl font-bold">0</div>
               </div>
               <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-xl">
                 <div className="flex items-center justify-between text-zinc-400 mb-2">
                   <span>Revenue</span>
                   <TrendingUp size={20} />
                 </div>
-                <div className="text-3xl font-bold">₹2,87,350</div>
+                <div className="text-3xl font-bold">₹0</div>
               </div>
               <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-xl">
                 <div className="flex items-center justify-between text-zinc-400 mb-2">
                   <span>Customers</span>
                   <Users size={20} />
                 </div>
-                <div className="text-3xl font-bold">132</div>
+                <div className="text-3xl font-bold">0</div>
               </div>
             </div>
           )}
