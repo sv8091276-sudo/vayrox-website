@@ -7,14 +7,11 @@ import {
   LogOut, 
   Plus, 
   Trash2, 
-  Edit, 
-  Save, 
-  X,
   TrendingUp,
-  DollarSign
+  X
 } from 'lucide-react';
-import { db } from '../../firebase'; // Firebase configuration import
-import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
+import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
 
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -22,12 +19,10 @@ export default function Admin() {
   const [password, setPassword] = useState('');
   const [activeTab, setActiveTab] = useState('dashboard');
   
-  // Real Database States
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   
-  // New Product Form State
   const [newProduct, setNewProduct] = useState({
     name: '',
     category: 'Men',
@@ -37,7 +32,6 @@ export default function Admin() {
     description: ''
   });
 
-  // Login Handler
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (username === 'admin' && password === 'admin123') {
@@ -47,14 +41,13 @@ export default function Admin() {
     }
   };
 
-  // Fetch Products from Firebase
   const fetchProducts = async () => {
     try {
       setLoading(true);
       const querySnapshot = await getDocs(collection(db, 'products'));
-      const productList = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
+      const productList = querySnapshot.docs.map(document => ({
+        id: document.id,
+        ...document.data()
       }));
       setProducts(productList);
     } catch (error) {
@@ -70,7 +63,6 @@ export default function Admin() {
     }
   }, [isAuthenticated]);
 
-  // Add Product to Firebase
   const handleAddProduct = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -93,7 +85,6 @@ export default function Admin() {
     }
   };
 
-  // Delete Product from Firebase
   const handleDeleteProduct = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
@@ -146,7 +137,6 @@ export default function Admin() {
 
   return (
     <div className="min-h-screen bg-black text-white flex">
-      {/* Sidebar */}
       <div className="w-64 bg-zinc-950 border-r border-zinc-800 flex flex-col">
         <div className="p-6 border-b border-zinc-800">
           <h1 className="text-xl font-serif tracking-widest">VAYROX Admin</h1>
@@ -187,7 +177,6 @@ export default function Admin() {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         <header className="h-16 bg-zinc-950 border-b border-zinc-800 flex items-center justify-between px-8">
           <h2 className="text-lg font-medium capitalize">{activeTab}</h2>
@@ -246,7 +235,7 @@ export default function Admin() {
               </div>
 
               {loading ? (
-                <div className="text-zinc-500 text-center py-12">Loading products from database...</div>
+                <div className="text-zinc-500 text-center py-12">Loading products...</div>
               ) : (
                 <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
                   <table className="w-full text-left border-collapse">
@@ -262,16 +251,16 @@ export default function Admin() {
                     <tbody className="divide-y divide-zinc-800 text-sm">
                       {products.length === 0 ? (
                         <tr>
-                          <td colSpan={5} className="p-6 text-center text-zinc-500">No products found in Firebase. Add your first product!</td>
+                          <td colSpan={5} className="p-6 text-center text-zinc-500">No products found. Add your first product!</td>
                         </tr>
                       ) : (
                         products.map((product) => (
-                          <tr key={product.id} className="hover:bg-zinc-850">
+                          <tr key={product.id} className="hover:bg-zinc-950">
                             <td className="p-4 font-medium">{product.name}</td>
                             <td className="p-4 text-zinc-400">{product.category}</td>
                             <td className="p-4 text-zinc-400">{product.type}</td>
                             <td className="p-4">₹{product.price}</td>
-                            <td className="p-4 text-right space-x-2">
+                            <td className="p-4 text-right">
                               <button 
                                 onClick={() => handleDeleteProduct(product.id)}
                                 className="text-red-400 hover:text-red-300 p-1"
@@ -303,7 +292,6 @@ export default function Admin() {
         </main>
       </div>
 
-      {/* Add Product Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
           <div className="bg-zinc-900 border border-zinc-800 rounded-xl max-w-lg w-full p-6">
