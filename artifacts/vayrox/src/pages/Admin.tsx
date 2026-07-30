@@ -10,7 +10,7 @@ import {
   TrendingUp,
   X
 } from 'lucide-react';
-import { db } from '../../firebase';
+import { db } from '../firebase';
 import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
 
 export default function Admin() {
