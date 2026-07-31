@@ -1,4 +1,5 @@
 import { Route, Switch, Router as WouterRouter } from 'wouter';
+import { useHashLocation } from 'wouter/use-hash-location';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -47,7 +48,7 @@ function AnimatedRoute({ component: Component, ...rest }: any) {
 
 function Router() {
   return (
-    <WouterRouter>
+    <WouterRouter hook={useHashLocation}>
       <div className="min-h-screen flex flex-col bg-background text-foreground">
         <Navbar />
         <main className="flex-grow">
