@@ -68,7 +68,7 @@ function Router() {
             <AnimatedRoute path="/skin-tone" component={SkinTone} />
             <AnimatedRoute path="/shop-by-body-type" component={ShopByBodyType} />
             <AnimatedRoute path="/shop-by-height" component={ShopByHeight} />
-            <AnimatedRoute path="/admin" component={Admin} />
+            <AnimatedRoute path="/my-admin" component={Admin} />
             <AnimatedRoute component={NotFound} />
           </Switch>
         </main>
