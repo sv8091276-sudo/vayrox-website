@@ -7,8 +7,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { CartProvider } from '@/contexts/CartContext';
 import { WishlistProvider } from '@/contexts/WishlistContext';
 import { AuthProvider } from '@/contexts/AuthContext';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
 
 // Pages
 import Home from '@/pages/Home';
