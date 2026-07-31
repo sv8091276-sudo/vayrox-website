@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Route, Switch, Router as WouterRouter } from 'wouter';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -30,6 +30,53 @@ import NotFound from '@/pages/not-found';
 
 const queryClient = new QueryClient();
 
+function AnimatedRoute({ component: Component, ...rest }: any) {
+  return (
+    <Route {...rest}>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <Component />
+      </motion.div>
+    </Route>
+  );
+}
+
+function Router() {
+  return (
+    <WouterRouter>
+      <div className="min-h-screen flex flex-col bg-background text-foreground">
+        <Navbar />
+        <main className="flex-grow">
+          <Switch>
+            <AnimatedRoute path="/" component={Home} />
+            <AnimatedRoute path="/shop" component={Shop} />
+            <AnimatedRoute path="/shop/men" component={ShopMen} />
+            <AnimatedRoute path="/shop/women" component={ShopWomen} />
+            <AnimatedRoute path="/product/:id" component={ProductDetail} />
+            <AnimatedRoute path="/cart" component={Cart} />
+            <AnimatedRoute path="/wishlist" component={Wishlist} />
+            <AnimatedRoute path="/login" component={Login} />
+            <AnimatedRoute path="/about" component={About} />
+            <AnimatedRoute path="/contact" component={Contact} />
+            <AnimatedRoute path="/faq" component={FAQ} />
+            <AnimatedRoute path="/size-guide" component={SizeGuide} />
+            <AnimatedRoute path="/skin-tone" component={SkinTone} />
+            <AnimatedRoute path="/shop-by-body-type" component={ShopByBodyType} />
+            <AnimatedRoute path="/shop-by-height" component={ShopByHeight} />
+            <AnimatedRoute path="/admin" component={Admin} />
+            <AnimatedRoute component={NotFound} />
+          </Switch>
+        </main>
+        <Footer />
+      </div>
+    </WouterRouter>
+  );
+}
+
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -38,33 +85,7 @@ export default function App() {
           <WishlistProvider>
             <TooltipProvider>
               <Toaster />
-              <Router>
-                <div className="min-h-screen flex flex-col bg-background text-foreground">
-                  <Navbar />
-                  <main className="flex-grow">
-                    <Routes>
-                      <Route path="/" element={<Home />} />
-                      <Route path="/shop" element={<Shop />} />
-                      <Route path="/shop/men" element={<ShopMen />} />
-                      <Route path="/shop/women" element={<ShopWomen />} />
-                      <Route path="/product/:id" element={<ProductDetail />} />
-                      <Route path="/cart" element={<Cart />} />
-                      <Route path="/wishlist" element={<Wishlist />} />
-                      <Route path="/login" element={<Login />} />
-                      <Route path="/about" element={<About />} />
-                      <Route path="/contact" element={<Contact />} />
-                      <Route path="/faq" element={<FAQ />} />
-                      <Route path="/size-guide" element={<SizeGuide />} />
-                      <Route path="/skin-tone" element={<SkinTone />} />
-                      <Route path="/shop-by-body-type" element={<ShopByBodyType />} />
-                      <Route path="/shop-by-height" element={<ShopByHeight />} />
-                      <Route path="/admin" element={<Admin />} />
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                  </main>
-                  <Footer />
-                </div>
-              </Router>
+              <Router />
             </TooltipProvider>
           </WishlistProvider>
         </CartProvider>
