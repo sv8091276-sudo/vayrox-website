@@ -89,9 +89,9 @@ export function Navbar() {
               <Link href="/contact" className="text-sm text-white/80 hover:text-white transition-colors" data-testid="link-nav-contact">
                 Contact
               </Link>
-              <Link href="/my-admin" className="text-sm text-white/80 hover:text-white transition-colors font-semibold" data-testid="link-nav-admin">
+              <a href="/#/my-admin" className="text-sm text-white/80 hover:text-white transition-colors font-semibold" data-testid="link-nav-admin">
                 Admin
-              </Link>
+              </a>
             </div>
 
             {/* Right Icons */}
@@ -225,9 +225,9 @@ export function Navbar() {
                 <Link href="/size-guide" className="text-lg text-foreground/80 hover:text-foreground transition-colors py-2" data-testid="link-mobile-size-guide">
                   Size Guide
                 </Link>
-                <Link href="/my-admin" className="text-lg text-primary font-semibold hover:text-foreground transition-colors py-2 border-t border-border mt-2 pt-4" data-testid="link-mobile-admin">
+                <a href="/#/my-admin" className="text-lg text-primary font-semibold hover:text-foreground transition-colors py-2 border-t border-border mt-2 pt-4" data-testid="link-mobile-admin">
                   Admin Dashboard
-                </Link>
+                </a>
               </div>
             </div>
           </motion.div>
